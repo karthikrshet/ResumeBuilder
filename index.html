@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Resume Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #74ABE2, #5563DE);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        input, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff7b54;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #ff5722;
+        }
+
+        iframe {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        footer strong {
+            color: #ffdd57;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Resume Builder</h1>
+
+        <input type="text" id="name" placeholder="Full Name" />
+        <input type="text" id="title" placeholder="Professional Title" />
+        <textarea id="summary" rows="4" placeholder="Brief Summary about you"></textarea>
+        <button id="generateBtn">Generate Resume</button>
+
+        <iframe id="resumePreview"></iframe>
+    </div>
+
+    <footer>
+        Developed by <strong>Karthik Shet</strong>
+    </footer>
+
+    <script>
+        const generateBtn = document.getElementById('generateBtn');
+        const resumePreview = document.getElementById('resumePreview');
+
+        generateBtn.addEventListener('click', () => {
+            const name = document.getElementById('name').value.trim();
+            const title = document.getElementById('title').value.trim();
+            const summary = document.getElementById('summary').value.trim();
+
+            if (!name || !title || !summary) {
+                return alert('Please fill in all fields.');
+            }
+
+            const html = `
+                <html>
+                    <head><style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { font-size: 28px; }
+                        h2 { font-size: 22px; color: #555; }
+                        p { font-size: 18px; }
+                    </style></head>
+                    <body>
+                        <h1>${name}</h1>
+                        <h2>${title}</h2>
+                        <p>${summary}</p>
+                    </body>
+                </html>
+            `;
+
+            const blob = new Blob([html], { type: 'text/html' });
+            resumePreview.src = URL.createObjectURL(blob);
+        });
+    </script>
+
+</body>
+
+</html>
